@@ -1,0 +1,17 @@
+{
+  "name": "webbridge-mcp-server",
+  "version": "1.0.0",
+  "description": "WebBridge MCP server — generate, test, and install site-specific MCP tools",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.22.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

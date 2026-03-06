@@ -1,0 +1,11 @@
+{
+  "name": "webbridge-plugin",
+  "version": "1.0.0",
+  "description": "WebBridge MCP Desktop Extension packager",
+  "private": true,
+  "scripts": {
+    "install:server": "cd server && npm install --production",
+    "pack": "npx @anthropic-ai/mcpb pack",
+    "build": "npm run install:server && npm run pack"
+  }
+}

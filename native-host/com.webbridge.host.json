@@ -1,0 +1,9 @@
+{
+  "name": "com.webbridge.host",
+  "description": "WebBridge Native Messaging Host — bridges Chrome extension auth to MCP servers",
+  "path": "__REPLACED_BY_INSTALL_SCRIPT__",
+  "type": "stdio",
+  "allowed_origins": [
+    "__REPLACED_BY_INSTALL_SCRIPT__"
+  ]
+}

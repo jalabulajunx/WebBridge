@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Claude Code local settings
+.claude/
+
+# Packaged extensions
+*.mcpb
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Runtime artifacts (these live in ~/.webbridge/, not in the repo)
+bridge.sock
+*.pid

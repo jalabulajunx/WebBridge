@@ -1,0 +1,19 @@
+{
+  "name": "webbridge-__SITE_ID__",
+  "version": "__VERSION__",
+  "description": "WebBridge-generated MCP server for __SITE_ID__. Routes all requests through the WebBridge Chrome extension for authenticated access.",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.22.0",
+    "@mozilla/readability": "^0.5.0",
+    "jsdom": "^25.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

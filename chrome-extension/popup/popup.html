@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebBridge</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">WebBridge</span>
+    </div>
+    <div class="native-status" id="nativeStatus" title="Native host connection">●</div>
+  </div>
+
+  <!-- Current Tab Section -->
+  <section class="section">
+    <div class="section-label">Current Tab</div>
+    <div class="current-tab" id="currentTabInfo">
+      <span class="tab-domain" id="tabDomain">—</span>
+    </div>
+
+    <div class="record-area" id="recordArea">
+      <button class="btn btn-record" id="btnRecord">● Record</button>
+      <button class="btn btn-stop hidden" id="btnStop">■ Stop</button>
+      <div class="recording-badge hidden" id="recordingBadge">
+        <span class="pulse-dot"></span>
+        <span id="requestCount">0</span> requests
+      </div>
+    </div>
+
+    <!-- Shown only when not recording -->
+    <div class="reload-row" id="reloadRow">
+      <label class="reload-label" title="Reloads the page after attaching the recorder so all page-load API calls are captured — like a HAR export.">
+        <input type="checkbox" id="reloadOnRecord" checked />
+        Reload page when recording starts
+      </label>
+      <label class="reload-label full-dump-label" title="Records every network request unfiltered — including analytics, trackers, fonts, and scripts. Use to audit what the site sends, understand tracking, or investigate privacy. Not needed for building MCP tools.">
+        <input type="checkbox" id="fullDump" />
+        Full dump (unfiltered — for privacy/traffic audit)
+      </label>
+    </div>
+
+    <div class="record-result hidden" id="recordResult"></div>
+  </section>
+
+  <!-- Divider -->
+  <div class="divider"></div>
+
+  <!-- Sites Section -->
+  <section class="section">
+    <div class="section-label">Configured Sites</div>
+    <div id="sitesList" class="sites-list">
+      <div class="loading">Loading…</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span class="footer-tip">Run <code>webbridge_read_recordings</code> in Claude to generate tools</span>
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

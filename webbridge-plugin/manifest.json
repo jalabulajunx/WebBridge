@@ -1,0 +1,66 @@
+{
+  "$schema": "https://raw.githubusercontent.com/modelcontextprotocol/mcpb/main/dist/mcpb-manifest.schema.json",
+  "manifest_version": "0.3",
+  "name": "webbridge",
+  "display_name": "WebBridge — Any Site as MCP Tools",
+  "version": "1.0.0",
+  "description": "Turn any website into Claude MCP tools — no code required. Record API traffic in Chrome, generate a working MCP server, test it, and install it. Also supports HAR file import and Full Dump mode for privacy/compliance auditing. DISCLAIMER: Using this tool to interact with websites may violate their Terms of Service. You are solely responsible for compliance. Requires the WebBridge Chrome extension and native host.",
+  "long_description": "WebBridge bridges your browser's live authenticated sessions to Claude Desktop tools. Browse to any website you're already logged into, click Record in the WebBridge Chrome extension, perform the actions you want to automate (search, fetch, submit), click Stop, then ask Claude to generate tools. Claude reads the captured traffic, asks you clarifying questions, and generates a fully typed MCP server with authentication handled through your browser. No passwords stored, no Electron app, no custom proxy — your browser IS the auth layer. Features include: self-validating code generation (catches ESM, wrong bridge, and low-level API errors automatically), incremental updates (re-record one action and only that tool is regenerated), HAR file import (bring traffic from Chrome DevTools, Firefox, Safari, or Fiddler), and Full Dump mode for unfiltered network capture — useful for privacy audits, tracking analysis, and legal compliance verification when paired with analysis tools. DISCLAIMER: Automated access to websites may violate their Terms of Service or Acceptable Use Policies. You are solely responsible for ensuring your use complies with all applicable terms, laws, and regulations.",
+  "author": {
+    "name": "jalabulajunx"
+  },
+  "license": "AGPL-3.0-only WITH Commons-Clause",
+  "keywords": ["browser", "automation", "mcp", "api", "chrome", "auth", "recording", "tools", "har", "privacy", "audit"],
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.js"],
+      "env": {}
+    }
+  },
+  "tools": [
+    {
+      "name": "webbridge_list_sites",
+      "description": "List all sites configured in WebBridge. Shows site IDs, domains, recording counts, tool counts, and auth strategies. Use this to see what's available before generating or testing."
+    },
+    {
+      "name": "webbridge_read_recordings",
+      "description": "Read the captured API traffic recordings for a specific site. Returns structured data about all recorded HTTP requests, response shapes, headers, and detected patterns (SSE, polling, WebSocket). Full Dump recordings trigger a privacy/tracking audit workflow instead of MCP tool generation. Use this before generating server code to understand the API."
+    },
+    {
+      "name": "webbridge_write_server",
+      "description": "Write generated MCP server files to the site's artifact directory (~/.webbridge/sites/<site-id>/server/). Accepts a map of relative file paths to file contents. Runs 3 static validators after writing: ESM syntax check, bridge pattern check, and MCP API pattern check. If any check fails, returns a descriptive error for immediate regeneration."
+    },
+    {
+      "name": "webbridge_write_tools_manifest",
+      "description": "Write the tools.json manifest to a site's artifact directory after generation is complete. This records the final tool definitions (names, descriptions, parameter schemas) for future reference, re-recording workflows, and per-tool management in the Chrome extension popup."
+    },
+    {
+      "name": "webbridge_update",
+      "description": "Check a site for new recordings captured after the last generation. Returns a structured diff of new vs existing API traffic alongside the current tool list and server code, so Claude can regenerate only the affected tool(s) — not the whole server. Use this when an API changes or you re-recorded one action."
+    },
+    {
+      "name": "webbridge_test",
+      "description": "Install dependencies and test a generated MCP server for a site. Spawns the server as a child process, performs an MCP handshake to list registered tools, and reports results. If the server crashes, pattern-matches the error output to diagnose the cause (missing node_modules, ESM syntax, wrong bridge URL) and returns a targeted fix suggestion."
+    },
+    {
+      "name": "webbridge_install",
+      "description": "Install a generated site MCP server. Supports 3 methods: claude_desktop_config (default, merges into config JSON — no reinstall needed on edits), desktop_extension (builds .mcpb for sharing), claude_code (merges into Claude Code settings). Verifies the WebBridge Chrome extension is running and the site's auth is healthy before installing."
+    },
+    {
+      "name": "webbridge_health_check",
+      "description": "Check whether the WebBridge Chrome extension is running and connected for a specific site/domain. Verifies the native messaging host is alive and the browser has an authenticated tab for the domain."
+    },
+    {
+      "name": "webbridge_fetch",
+      "description": "Execute an authenticated HTTP request through the WebBridge Chrome extension for a configured site. Routes through the browser's live session — no credentials stored or required. Useful for testing auth, fetching live data during generation, or one-off API calls."
+    },
+    {
+      "name": "webbridge_import_har",
+      "description": "Convert a browser-exported HAR (HTTP Archive) file into a WebBridge recording. Works with HAR files from Chrome DevTools, Firefox, Safari, Fiddler, or any tool that exports the standard HAR format. Optionally filter by domain. Use this when recordings from the extension were too sparse or when you already have a HAR file from another source."
+    }
+  ],
+  "user_config": {}
+}
