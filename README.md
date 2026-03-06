@@ -37,6 +37,8 @@ The generated tools:
 
 **How it was built:** Record a single catalogue search on BiblioCommons, let Claude analyze the API traffic, generate the MCP server, test, install. The entire process took under 10 minutes with no code written manually.
 
+https://github.com/user-attachments/assets/97b9c6ee-5d11-425a-ac7c-f5aff3ee1102
+
 ### Legal Compliance Auditing
 
 Use WebBridge's **Full Dump mode** to capture every network request an application makes — including analytics beacons, third-party calls, and data shared with external services. Then pair the recording with Anthropic's [Legal Knowledge Work Plugin](https://github.com/anthropics/knowledge-work-plugins/tree/main/legal) to have Claude perform compliance analysis:
@@ -45,6 +47,8 @@ Use WebBridge's **Full Dump mode** to capture every network request an applicati
 - **`review-contract`** — Cross-reference a Data Processing Agreement (DPA) against the observed third-party data sharing
 
 This gives legal and compliance teams a way to audit what an application *does* versus what it *says* it does — grounded in actual network evidence rather than documentation alone.
+
+https://github.com/user-attachments/assets/b4fab281-5f2e-449f-affd-7a314fc802c1
 
 ### Privacy & Tracking Audit
 
