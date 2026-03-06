@@ -1,6 +1,8 @@
 # WebBridge
 
-Turn any website into Claude MCP tools — without writing code, without the site's cooperation, and without a separate desktop app. All using Claude Desktop in Cowork or Code mode.
+Turn any website into MCP tools — without writing code, without the site's cooperation, and without a separate desktop app.
+
+Generated servers use the open [Model Context Protocol](https://modelcontextprotocol.io/) standard and work with **any MCP-compatible client** — Claude Desktop, Claude Cowork, Claude Code, Cursor, VS Code (Copilot), Windsurf, Cline, Continue, and more.
 
 > **IMPORTANT DISCLAIMER:** Using WebBridge to interact with websites may violate those websites' Terms of Service, Acceptable Use Policies, or other agreements you have with them. Automated access to websites can result in your IP address being blocked, your account being suspended, or legal action. **You are solely responsible for ensuring your use of WebBridge complies with all applicable terms, laws, and regulations.** The authors of WebBridge accept no liability for misuse. See the [full disclaimer](#disclaimer) below.
 
@@ -326,6 +328,44 @@ Auth is auto-detected during recording. Override per-site in the WebBridge popup
 
 ---
 
+## Compatibility
+
+WebBridge generates standard MCP servers that speak JSON-RPC over stdio. They work with **any client that supports the Model Context Protocol** — not just Claude.
+
+### Generation (the WebBridge plugin)
+
+The WebBridge plugin itself (the 10 tools that read recordings, generate code, test, and install) is designed to run in **Claude Desktop** (Cowork mode) or **Claude Code**. The AI needs to be capable enough to analyze API traffic and write a working MCP server from it — Claude is the target for this step.
+
+### Generated servers (the output)
+
+The servers WebBridge produces are **portable**. Once generated, they run anywhere MCP is supported:
+
+| Client | How to connect |
+|---|---|
+| **Claude Desktop** | `webbridge_install` with `claude_desktop_config` (default) or `.mcpb` extension |
+| **Claude Code** | `webbridge_install` with `claude_code`, or add to `.claude/settings.json` |
+| **Cursor** | Add to Cursor's MCP config (Settings → MCP → Add Server) |
+| **VS Code (Copilot)** | Add to `.vscode/mcp.json` in your workspace |
+| **Windsurf** | Add to `~/.codeium/windsurf/mcp_config.json` |
+| **Cline / Continue** | Add to the respective MCP settings file |
+| **Any MCP client** | Point at the `index.js` with `command: "node"` |
+
+Example config for any client:
+```json
+{
+  "mcpServers": {
+    "my-site": {
+      "command": "node",
+      "args": ["/home/you/.webbridge/sites/my_site/server/index.js"]
+    }
+  }
+}
+```
+
+> **Note:** The `.mcpb` packaging format is Claude Desktop-specific. For other clients, point directly at the generated `index.js` — no packaging needed.
+
+---
+
 ## MCP Tools Reference
 
 | Tool | Description |
@@ -358,7 +398,7 @@ Re-record the affected action in the extension, then call `webbridge_update`. Cl
 The background tab is a minimal hidden tab that stays loaded. Chrome may discard it under memory pressure; WebBridge re-opens it automatically. You can disable the toggle per-site if you prefer to manage tabs manually.
 
 **Q: Can I share my WebBridge integrations?**
-The `.mcpb` files (Desktop Extensions) contain no credentials — only tool definitions, endpoint patterns, and parameter schemas. They're safe to share. Recipients need to log into the site themselves.
+Yes. The `.mcpb` files (Claude Desktop Extensions) contain no credentials — only tool definitions, endpoint patterns, and parameter schemas. They're safe to share. For non-Claude clients, share the generated `server/` directory — recipients just run `npm install` and point their MCP client at `index.js`. Either way, recipients need to log into the site themselves in Chrome.
 
 **Q: The yellow "Extension is debugging this browser" bar appeared.**
 This only shows during recording when `chrome.debugger` is attached. It disappears when you click Stop. It does not appear during normal tool usage.
@@ -426,5 +466,5 @@ For commercial licensing inquiries, contact the [Licensor](https://github.com/ja
 | CDP Events Used | `Network.requestWillBeSent`, `Network.responseReceived`, `Network.loadingFinished`, `Network.loadingFailed`, `Network.eventSourceMessageReceived`, `Network.webSocketCreated/FrameSent/FrameReceived` |
 | Native Host | Node.js 18+, `net.createServer` (Unix socket), newline-delimited JSON protocol |
 | MCP Plugin | `@modelcontextprotocol/sdk`, `zod` |
-| Generated Servers | `@modelcontextprotocol/sdk`, `zod`, WebBridge Unix socket bridge client (`net.createConnection`) |
+| Generated Servers | `@modelcontextprotocol/sdk`, `zod`, WebBridge Unix socket bridge client (`net.createConnection`) — works with any MCP client |
 | Packaging | `@anthropic-ai/mcpb` (for Desktop Extension distribution) |
