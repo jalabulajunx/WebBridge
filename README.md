@@ -1,6 +1,6 @@
 # WebBridge
 
-Turn any website into Claude MCP tools — without writing code, without the site's cooperation, and without a separate desktop app.
+Turn any website into Claude MCP tools — without writing code, without the site's cooperation, and without a separate desktop app. All using Claude Desktop in Cowork or Code mode.
 
 > **IMPORTANT DISCLAIMER:** Using WebBridge to interact with websites may violate those websites' Terms of Service, Acceptable Use Policies, or other agreements you have with them. Automated access to websites can result in your IP address being blocked, your account being suspended, or legal action. **You are solely responsible for ensuring your use of WebBridge complies with all applicable terms, laws, and regulations.** The authors of WebBridge accept no liability for misuse. See the [full disclaimer](#disclaimer) below.
 
