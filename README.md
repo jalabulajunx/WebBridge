@@ -1,5 +1,7 @@
 # WebBridge
 
+_Made with AI_
+
 Turn any website into MCP tools — without writing code, without the site's cooperation, and without a separate desktop app.
 
 Generated servers use the open [Model Context Protocol](https://modelcontextprotocol.io/) standard and work with **any MCP-compatible client** — Claude Desktop, Claude Cowork, Claude Code, Cursor, VS Code (Copilot), Windsurf, Cline, Continue, and more.
